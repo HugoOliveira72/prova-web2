@@ -25,8 +25,8 @@
          - havendo registros, a contagem, no formato:  N registro(s).
          - nao havendo nenhum, a frase:  Nenhuma sala cadastrada.
        ================================================================== -->
-  {% if lista %}
-    <p>{{ lista|length }} lista(s) cadastradas.</p>
+  {% if salas %}
+    <p>{{ salas|length }} lista(s) cadastradas.</p>
     <ul id="lista">
       {% for item in salas %}
         <li>
