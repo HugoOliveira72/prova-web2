@@ -10,6 +10,7 @@ class SalaDAO:
     @staticmethod
     def salvar(sala):
         db.session.add(sala)
+        db.session.commit()
 
     # READ (todos)
     @staticmethod
