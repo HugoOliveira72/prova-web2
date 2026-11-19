@@ -25,22 +25,26 @@
          - havendo registros, a contagem, no formato:  N registro(s).
          - nao havendo nenhum, a frase:  Nenhuma sala cadastrada.
        ================================================================== -->
+  {% if lista %}
+    <p>{{ lista|length }} lista(s) cadastradas.</p>
+    <ul id="lista">
+      {% for item in salas %}
+        <li>
+          <strong>{{ item.nome }}</strong>
+          — {{ item.bloco }}
+          — {{ item.capacidade }}
 
-  <ul id="lista">
-    {% for item in salas %}
-      <li>
-        <strong>{{ item.nome }}</strong>
-        — {{ item.bloco }}
-        — {{ item.capacidade }}
+          <a href="{{ url_for('sala.editar', id=item.id) }}">editar</a>
 
-        <a href="{{ url_for('sala.editar', id=item.id) }}">editar</a>
-
-        <form method="post" action="{{ url_for('sala.excluir', id=item.id) }}">
-          <button type="submit">excluir</button>
-        </form>
-      </li>
-    {% endfor %}
-  </ul>
+          <form method="post" action="{{ url_for('sala.excluir', id=item.id) }}">
+            <button type="submit">excluir</button>
+          </form>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Nenhuma sala cadastrada.</p>
+  {% endif %}
 
   <p class="escopos">
     Acessos nesta sessão: <strong id="contador">{{ session["acessos"] }}</strong>
