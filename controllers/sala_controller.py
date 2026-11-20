@@ -15,6 +15,13 @@ sala_bp = Blueprint("sala", __name__)
 # =====================================================================
 
 
+
+@sala_bp.before_request
+def exigir_login():
+    if 'usuario_id' not in session:
+        flash("Você precisa estar logado para acessar esta página.")
+        return redirect(url_for('auth.login'))
+    
 # Listagem (GET) e cadastro (POST) na mesma rota
 @sala_bp.route("/", methods=["GET", "POST"])
 def index():
