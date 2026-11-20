@@ -34,6 +34,14 @@ def listar():
 # Escreva aqui a rota GET /api/salas/<id>, que devolve UM registro.
 # Se o id nao existir, a resposta e 404 com {"erro": "Sala nao encontrada."}.
 # =====================================================================
+@api_bp.route("api/salas/<int:id>", methods=["GET"])
+def getsala(id):
+
+    sala = SalaDAO.buscar_por_id(id)
+    if not sala:
+        return jsonify({"erro": "Sala nao encontrada."}), 404
+
+    return jsonify(sala)
 
 
 # ===== ITEM 9 ========================================================
