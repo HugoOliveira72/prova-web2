@@ -5,6 +5,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask import session
 from werkzeug.security import check_password_hash
 from models.usuario import Usuario
+from werkzeug.security import generate_password_hash
 from dao.usuario_dao import UsuarioDAO
 
 auth_bp = Blueprint("auth", __name__)
@@ -29,16 +30,21 @@ def login():
 @auth_bp.route("/cadastro", methods=["GET", "POST"])
 def cadastro():
     if request.method == "POST":
+        nome = request.form["nome"],
+        email = request.form["email"].strip().lower(),
+        senha = request.form["senha"]
+
         if UsuarioDAO.buscar_por_email(request.form["email"]):
             flash("Ja existe uma conta com este e-mail.")
             return render_template("cadastro.html")
 
         usuario = Usuario(
-            nome=request.form["nome"],
-            email=request.form["email"],
-            senha_hash=request.form["senha"]
+            nome=nome,
+            email=email,
+            senha_hash=generate_password_hash(senha),
         )
         UsuarioDAO.salvar(usuario)
+
         flash("Conta criada. Faca login para continuar.")
         return redirect(url_for("auth.login"))
 
