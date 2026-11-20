@@ -46,6 +46,15 @@ def editar(id):
     # O formulario de edicao e enviado para esta rota por POST, mas nada
     # e gravado. Trate aqui o envio: grave a alteracao e volte a listagem.
     # =================================================================
+    if request.method == "POST":
+        SalaDAO.atualizar(
+                sala,
+                nome=request.form["nome"],
+                bloco=request.form["bloco"],
+                capacidade=request.form["capacidade"],
+            )
+            
+        return redirect(url_for("sala.index"))
 
     return render_template("editar.html", sala=sala)
 
